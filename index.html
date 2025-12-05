@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Loan Architect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Plus Jakarta Sans', 'sans-serif'],
+            },
+            colors: {
+              // Custom Premium Palette
+              dark: {
+                bg: '#020617',     // Slate 950
+                surface: '#0f172a', // Slate 900
+                card: '#1e293b',    // Slate 800
+                border: 'rgba(255, 255, 255, 0.08)',
+                input: '#1e293b'
+              },
+              light: {
+                bg: '#f8fafc',      // Slate 50
+                surface: '#ffffff',
+                card: '#ffffff',
+                border: '#e2e8f0',
+                input: '#f1f5f9'
+              },
+              brand: {
+                500: '#8b5cf6', // Violet
+                600: '#7c3aed',
+                cyan: '#06b6d4'
+              }
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'fade-in': 'fadeIn 0.5s ease-out forwards',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              },
+              slideUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      
+      /* Smooth Theme Transition for all elements */
+      *, *::before, *::after {
+        transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 300ms;
+      }
+
+      /* Custom Premium Scrollbar */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 99px;
+      }
+      .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #334155;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+      .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+      }
+
+      /* Glassmorphism Utilities */
+      .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+      .dark .glass {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      /* LIQUID SLIDER - The "Magical" Input Range */
+      /* We use CSS variable --range-progress (0% to 100%) set in React inline styles */
+      
+      input[type=range] {
+        -webkit-appearance: none;
+        appearance: none; 
+        width: 100%;
+        cursor: pointer;
+        background: transparent;
+        height: 24px; /* Touch target */
+      }
+
+      /* Webkit Track */
+      input[type=range]::-webkit-slider-runnable-track {
+        height: 6px;
+        border-radius: 99px;
+        background: #e2e8f0; /* Default empty track */
+        /* This linear gradient acts as the "filled" part. 
+           It stops exactly at var(--range-progress). */
+        background-image: linear-gradient(var(--range-color, #8b5cf6), var(--range-color, #8b5cf6));
+        background-size: var(--range-progress, 0%) 100%;
+        background-repeat: no-repeat;
+        border: none;
+      }
+      .dark input[type=range]::-webkit-slider-runnable-track {
+        background: #334155; /* Dark mode empty track */
+      }
+
+      /* Webkit Thumb */
+      input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 2px solid var(--range-color, #8b5cf6);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        margin-top: -7px; /* (TrackHeight 6px - ThumbHeight 20px) / 2 */
+        transition: transform 0.1s ease, box-shadow 0.2s ease;
+      }
+      .dark input[type=range]::-webkit-slider-thumb {
+        background: #0f172a;
+        box-shadow: 0 0 15px var(--range-color, #8b5cf6);
+      }
+
+      /* Thumb Hover/Active */
+      input[type=range]:hover::-webkit-slider-thumb {
+        transform: scale(1.15);
+        cursor: grab;
+      }
+      input[type=range]:active::-webkit-slider-thumb {
+        cursor: grabbing;
+        transform: scale(1.05);
+        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
+      }
+
+      /* Firefox Support */
+      input[type=range]::-moz-range-track {
+        height: 6px;
+        border-radius: 99px;
+        background: #e2e8f0;
+      }
+      .dark input[type=range]::-moz-range-track {
+        background: #334155;
+      }
+      input[type=range]::-moz-range-progress {
+        background: var(--range-color, #8b5cf6);
+        height: 6px;
+        border-radius: 99px;
+      }
+      input[type=range]::-moz-range-thumb {
+        height: 20px;
+        width: 20px;
+        border: 2px solid var(--range-color, #8b5cf6);
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+      .dark input[type=range]::-moz-range-thumb {
+        background: #0f172a;
+      }
+      
+      input[type=range]:focus {
+        outline: none;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
+    "react-markdown": "https://aistudiocdn.com/react-markdown@^10.1.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-light-bg dark:bg-dark-bg text-slate-900 dark:text-slate-100 antialiased selection:bg-purple-500/30 selection:text-purple-900 dark:selection:text-purple-200 overflow-x-hidden">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
