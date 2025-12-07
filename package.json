@@ -14,7 +14,9 @@
     "@google/genai": "^1.30.0",
     "lucide-react": "^0.555.0",
     "recharts": "^3.5.1",
-    "react-markdown": "^10.1.0"
+    "react-markdown": "^10.1.0",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.31"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
