@@ -227,6 +227,7 @@ const App: React.FC = () => {
                     summary={displaySummary} 
                     comparisonSummary={comparisonSummary}
                     isComparisonActive={isComparisonActive}
+                    schedule={displaySchedule}
                 />
             </div>
 
